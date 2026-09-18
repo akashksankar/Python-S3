@@ -1,214 +1,136 @@
-<?xml version="1.0" encoding="utf-8"?>
+package com.example.caaalc;
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
-    <!-- UPPER HALF : DISPLAY -->
+import androidx.appcompat.app.AppCompatActivity;
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="bottom|end"
-        android:padding="16dp">
+public class MainActivity extends AppCompatActivity {
 
-        <TextView
-            android:id="@+id/tvExpression"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="28sp"
-            android:gravity="end"
-            android:textColor="#333333" />
+    TextView tvExpression;
+    TextView tvResult;
 
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Result: 0"
-            android:textSize="24sp"
-            android:gravity="end"
-            android:textColor="#777777"
-            android:paddingTop="8dp" />
+    String number1 = "";
+    String number2 = "";
+    String operator = "";
 
-    </LinearLayout>
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
+        tvExpression = findViewById(R.id.tvExpression);
+        tvResult = findViewById(R.id.tvResult);
 
-    <!-- LOWER HALF : BUTTONS -->
+        // Number buttons
+        int[] numbers = {
+                R.id.b0, R.id.b1, R.id.b2, R.id.b3,
+                R.id.b4, R.id.b5, R.id.b6, R.id.b7,
+                R.id.b8, R.id.b9
+        };
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:columnCount="4"
-        android:rowCount="4"
-        android:padding="4dp">
+        for (int id : numbers) {
 
-        <!-- ROW 1 -->
+            Button button = findViewById(id);
 
-        <Button
-            android:id="@+id/b1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="1"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+            button.setOnClickListener(v -> {
 
-        <Button
-            android:id="@+id/b2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="2"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+                String value = button.getText().toString();
 
-        <Button
-            android:id="@+id/b3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="3"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+                if (operator.isEmpty()) {
+                    number1 += value;
+                } else {
+                    number2 += value;
+                }
 
-        <Button
-            android:id="@+id/bAdd"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="+"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+                showExpression();
+            });
+        }
 
 
-        <!-- ROW 2 -->
+        // Operators
+        findViewById(R.id.bAdd)
+                .setOnClickListener(v -> setOperator("+"));
 
-        <Button
-            android:id="@+id/b4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="4"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+        findViewById(R.id.bSub)
+                .setOnClickListener(v -> setOperator("-"));
 
-        <Button
-            android:id="@+id/b5"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="5"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+        findViewById(R.id.bMul)
+                .setOnClickListener(v -> setOperator("*"));
 
-        <Button
-            android:id="@+id/b6"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="6"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
-
-        <Button
-            android:id="@+id/bSub"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="-"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+        findViewById(R.id.bDiv)
+                .setOnClickListener(v -> setOperator("/"));
 
 
-        <!-- ROW 3 -->
-
-        <Button
-            android:id="@+id/b7"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="7"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
-
-        <Button
-            android:id="@+id/b8"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="8"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
-
-        <Button
-            android:id="@+id/b9"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="9"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
-
-        <Button
-            android:id="@+id/bMul"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="*"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+        // Equal
+        findViewById(R.id.bEqual)
+                .setOnClickListener(v -> calculate());
+    }
 
 
-        <!-- ROW 4 -->
+    private void setOperator(String op) {
 
-        <Button
-            android:id="@+id/b0"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="0"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+        if (number1.isEmpty()) {
+            return;
+        }
 
-        <Button
-            android:id="@+id/bDiv"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:text="/"
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+        operator = op;
 
-        <Button
-            android:id="@+id/bEqual"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_columnWeight="2"
-            android:layout_rowWeight="1"
-            android:text="="
-            android:textSize="18sp"
-            android:layout_margin="4dp" />
+        showExpression();
+    }
 
-    </GridLayout>
 
-</LinearLayout>
+    private void showExpression() {
+
+        String expression =
+                number1 + " " +
+                operator + " " +
+                number2;
+
+        tvExpression.setText(expression);
+    }
+
+
+    private void calculate() {
+
+        if (number1.isEmpty()
+                || number2.isEmpty()
+                || operator.isEmpty()) {
+
+            return;
+        }
+
+        double a = Double.parseDouble(number1);
+        double b = Double.parseDouble(number2);
+
+        double result = 0;
+
+        switch (operator) {
+
+            case "+":
+                result = a + b;
+                break;
+
+            case "-":
+                result = a - b;
+                break;
+
+            case "*":
+                result = a * b;
+                break;
+
+            case "/":
+
+                if (b == 0) {
+                    tvResult.setText("Result: Error");
+                    return;
+                }
+
+                result = a / b;
+                break;
+        }
+
+        tvResult.setText("Result: " + result);
+    }
+}
