@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try {
-
             listView = findViewById(R.id.listView);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -39,27 +38,12 @@ public class MainActivity extends AppCompatActivity {
 
             listView.setOnItemClickListener((parent, view, position, id) -> {
 
-                try {
+                Toast.makeText(
+                        MainActivity.this,
+                        "Error: No data",
+                        Toast.LENGTH_SHORT
+                ).show();
 
-                    // Example: C++ is treated as an invalid selection
-                    if (languages[position].equals("C++")) {
-                        throw new Exception("Invalid selection!");
-                    }
-
-                    Toast.makeText(
-                            MainActivity.this,
-                            "Selected: " + languages[position],
-                            Toast.LENGTH_SHORT
-                    ).show();
-
-                } catch (Exception e) {
-
-                    Toast.makeText(
-                            MainActivity.this,
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_SHORT
-                    ).show();
-                }
             });
 
         } catch (Exception e) {
