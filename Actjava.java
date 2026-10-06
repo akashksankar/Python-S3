@@ -2,29 +2,28 @@ package com.example.intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
+public class second extends AppCompatActivity {
 
-    Button btn;
+    Button bb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
-        btn = findViewById(R.id.button);
+        bb = findViewById(R.id.button2);
 
-        btn.setOnClickListener(new View.OnClickListener() {
+        bb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Intent i = new Intent(
-                        MainActivity.this,
-                        second.class
+                        second.this,
+                        MainActivity.class
                 );
 
                 startActivity(i);
